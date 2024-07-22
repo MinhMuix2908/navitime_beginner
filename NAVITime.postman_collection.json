@@ -1,0 +1,326 @@
+{
+	"info": {
+		"_postman_id": "ce550a3f-3601-4be9-b12c-1cc45d1f8e48",
+		"name": "NAVITime",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13104804"
+	},
+	"item": [
+		{
+			"name": "car",
+			"item": [
+				{
+					"name": "1. Our find_spot",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}:{{port}}/car/find_spot?word=千葉県浦安市舞浜1-1",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"car",
+								"find_spot"
+							],
+							"query": [
+								{
+									"key": "word",
+									"value": "千葉県浦安市舞浜1-1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Our draw_car_map",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}:{{port}}/car/draw_car_map?start=35.632548,139.881327&goal=35.673581,139.760239&transits=35.679769,139.807961,35.666007,139.717035",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"car",
+								"draw_car_map"
+							],
+							"query": [
+								{
+									"key": "request_code",
+									"value": "USMH3222navitime",
+									"disabled": true
+								},
+								{
+									"key": "signature",
+									"value": "709927a10a56d5feb68fe53a986081a6e5b1dd16a2b8c495f85ec594ae1111b0",
+									"disabled": true
+								},
+								{
+									"key": "start",
+									"value": "35.632548,139.881327"
+								},
+								{
+									"key": "goal",
+									"value": "35.673581,139.760239"
+								},
+								{
+									"key": "transits",
+									"value": "35.679769,139.807961,35.666007,139.717035"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. Our detail_car_map",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}:{{port}}/car/detail_car_map?start=35.632548,139.881327&goal=35.673581,139.760239&transits=35.679769,139.807961,35.666007,139.717035",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"car",
+								"detail_car_map"
+							],
+							"query": [
+								{
+									"key": "start",
+									"value": "35.632548,139.881327"
+								},
+								{
+									"key": "goal",
+									"value": "35.673581,139.760239"
+								},
+								{
+									"key": "transits",
+									"value": "35.679769,139.807961,35.666007,139.717035"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "bus",
+			"item": [
+				{
+					"name": "1. find_station",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}:{{port}}/bus/find_station?word=ＯＣＡＴ",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"bus",
+								"find_station"
+							],
+							"query": [
+								{
+									"key": "word",
+									"value": "ＯＣＡＴ"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. find_route",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}:{{port}}/bus/detail_route?start=00083097&goal=00288905",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"bus",
+								"detail_route"
+							],
+							"query": [
+								{
+									"key": "start",
+									"value": "00083097"
+								},
+								{
+									"key": "goal",
+									"value": "00288905"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "metro",
+			"item": [
+				{
+					"name": "1. find_station",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}:{{port}}/metro/find_station?word=東京",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"metro",
+								"find_station"
+							],
+							"query": [
+								{
+									"key": "word",
+									"value": "東京"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. find_route",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}:{{port}}/metro/detail_route?start=00000096&goal=00006668",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"metro",
+								"detail_route"
+							],
+							"query": [
+								{
+									"key": "start",
+									"value": "00000096"
+								},
+								{
+									"key": "goal",
+									"value": "00006668"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "map",
+			"item": [
+				{
+					"name": "1. default Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}:{{port}}/metro/find_station?word=東京",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"metro",
+								"find_station"
+							],
+							"query": [
+								{
+									"key": "word",
+									"value": "東京"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. point",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}:{{port}}/map/point?lat=35.632548&lon=139.881327",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"map",
+								"point"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "35.632548"
+								},
+								{
+									"key": "lon",
+									"value": "139.881327"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "domain",
+			"value": "localhost"
+		},
+		{
+			"key": "port",
+			"value": "3000",
+			"type": "string"
+		}
+	]
+}

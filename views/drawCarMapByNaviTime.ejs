@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Leaflet GeoJSON Example</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="/js/mapscript.js"></script>
+
+  <style>
+    .custom-icon {
+      width: 30px;
+      height: 30px;
+      background: transparent;
+      transform-origin: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map" style="width: 100%; height: 900px;"></div>
+  <script>
+    // Add GeoJSON data to the map
+    var shapeCar = <%- JSON.stringify(shapeCar) %>;
+    var startCoordinates = <%- JSON.stringify(startCoordinates) %>;
+    var goalCoordinates = <%- JSON.stringify(goalCoordinates) %>;
+    var coordinatesList = <%- JSON.stringify(coordinatesList) %>;
+
+    // Create the map and set its initial view
+    var map = new navitime.geo.map.Map('map', new navitime.geo.LatLng(startCoordinates[0], startCoordinates[1]),14);
+    
+    // Draw line
+    navitime.geo.GeoJSON.draw({ map : map ,json : shapeCar }); 
+    
+    // Start pin
+    var startPin = new navitime.geo.overlay.Pin({
+      icon:'/img/start.png',
+      position:new navitime.geo.LatLng(startCoordinates[0], startCoordinates[1]),
+      draggable:false,
+      map:map,
+      title:'新大久保'
+    });
+
+    // Goal pin
+    var goalPin = new navitime.geo.overlay.Pin({
+      icon:'/img/goal.png',
+      position:new navitime.geo.LatLng(goalCoordinates[0], goalCoordinates[1]),
+      draggable:false,
+      map:map,
+      title:'新大久保'
+    });
+
+    coordinatesList.forEach((item, index) => {
+      if (index % 2 === 0) {
+        var midPin = new navitime.geo.overlay.Pin({
+          icon:'/img/mid.png',
+          position:new navitime.geo.LatLng(item, coordinatesList[index + 1]),
+          draggable:false,
+          map:map,
+          title:''
+        });
+      }
+    });
+
+    function difference(a, b) {
+      return Math.abs((a - b));
+    }
+
+    function bearing(p1, p2) {
+      var lat1 = p1[1] * Math.PI / 180;
+      var lat2 = p2[1] * Math.PI / 180;
+      var lon1 = p1[0] * Math.PI / 180;
+      var lon2 = p2[0] * Math.PI / 180;
+
+      var y = Math.sin(lon2 - lon1) * Math.cos(lat2);
+      var x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
+      var angle = Math.atan2(y, x) * 180 / Math.PI;
+
+      return (angle + 360 + 180) % 360;
+    }
+
+    var lastRotationAngle = 0;
+    var skipTime = 0;
+    shapeCar.features.forEach(function (feature) {
+      var latlngs = feature.geometry.coordinates.map(function (coord) {
+        return [coord[1], coord[0]];
+      });
+      latlngs.forEach(function (latlng, index) {
+        var nextLatlng = latlngs[index + 1];
+        if (nextLatlng) {
+          var rotationAngle = bearing(latlng, nextLatlng);
+          if ((difference(lastRotationAngle, rotationAngle) > 50) || (skipTime > 20)) {
+            skipTime = 0;
+            lastRotationAngle = rotationAngle;
+
+            var direction = new navitime.geo.overlay.Pin({
+              icon:'/img/left.png',
+              position:new navitime.geo.LatLng(latlng[0], latlng[1]),
+              draggable:false,
+              map:map,
+              title:'新大久保'
+            });
+            direction.div.firstChild.style.rotate = rotationAngle + 'deg'
+          } else {
+            // After 5 times in a row, the difference between 2 lines is not over 20, we still print out an arrow sign (for long straight roads)
+            skipTime += 1;
+          }
+        }
+      });
+    });
+
+  </script>
+</body>
+
+</html>

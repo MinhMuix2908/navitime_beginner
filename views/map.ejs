@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Leaflet GeoJSON Example</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-polylinedecorator"></script> <!-- Add this line for PolylineDecorator -->
+  <style>
+    .custom-icon {
+      width: 30px;
+      height: 30px;
+      background: transparent;
+      transform-origin: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map" style="width: 100%; height: 900px;"></div>
+  <script>
+    var lat = <%- JSON.stringify(lat) %>;
+    var lon = <%- JSON.stringify(lon) %>;
+    var zoom = <%- JSON.stringify(zoom) %>;
+    var showMarker = <%- JSON.stringify(showMarker) %>;
+
+    var map = L.map('map').setView([lat, lon], zoom);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: 'Author by Minh.DaoQuang'
+    }).addTo(map);
+    if (showMarker){
+      var markertIcon = L.icon({
+        iconUrl: '/img/marker.png',
+        iconSize: [30, 30],
+        iconAnchor: [15, 15],
+        className: 'custom-midpoint-icon'
+      });
+      L.marker([lat, lon], { icon: markertIcon }).addTo(map);
+    }
+  </script>
+</body>
+
+</html>
