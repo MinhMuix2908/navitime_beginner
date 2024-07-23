@@ -13,11 +13,4 @@ There are 12 sets of NaviTime APIs that they provide. Due to time constraints, I
 
 Feel free to test all the APIs available. If you want to complete this project, please create a PR to my repo.
 
-# A little demo of my work
-Image of map using NaviTime paid version
-![alt navitime_image](blob/navitime_image.png)
-
-Image of map using RapidAPI and leaflet
-![alt leaflet_rabidapi](blob/leaflet_rabidapi.png)
-
 # Peace
