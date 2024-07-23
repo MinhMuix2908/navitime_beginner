@@ -1,10 +1,10 @@
 require('dotenv').config();
 
-const navitimeConfig = {
-  domain: process.env.API_DOMAIN || 'error',
-  cid: process.env.API_CID || 'error',
-  signature: process.env.API_SIGNATURE || 'error',
-  requestCode: process.env.API_REQUEST_CODE || 'error',
+const rabidapiConfig = {
+  car_domain: process.env.CAR_DOMAIN || 'error',
+  car_key: process.env.CAR_KEY || 'error',
+  geo_domain: process.env.GEO_DOMAIN || 'error',
+  geo_key: process.env.GEO_KEY || 'error',
 };
 
 const serverConfig = {
@@ -13,6 +13,6 @@ const serverConfig = {
 };
 
 module.exports = {
-  navitimeConfig,
+  rabidapiConfig,
   serverConfig
 };

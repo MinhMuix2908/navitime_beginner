@@ -1,37 +1,16 @@
-# Why navitime
-So i started a project for drawing a car route from A to B in Japan (with transits C, D, etc)
-Also need to find options for bus, metro from A to B
-I found out that they got something call navitime
-At first everything is so blur and hard to understand for me
-So that why after i getting a little more familiar with this navitime, i decided to create this project
-If you like my work, please give me a start and a folk
-So appriciate 
+# Free API
+Basically the same but with a free limit of 500 API calls every month so anyone can start.
 
-# Generate API token for NAVITime
-You need to create API access to NAVITime including:
+# Rabidapi
+I found out that RapidAPI also has NaviTime and comes with a limited number of free requests.
 
-API_DOMAIN=xxxxxxxxx api-service url from navitime.biz
+You can register an account on rapidapi.com. Search for the NaviTime API and subscribe to test it.
 
-API_CID=rxxxxxxx will be the user's CID
+The free tier allows up to 500 requests per month.
 
-API_SIGNATURE=xxxxxxxxxxxxxxxxxxxx which consists of the request code and key
+# Trying new API
+There are 12 sets of NaviTime APIs that they provide. Due to time constraints, I could only try the car API and map API.
 
-CryptoJS.HmacSHA256('API_REQUEST_CODE', 'KEY')
+Feel free to test all the APIs available. If you want to complete this project, please create a PR to my repo.
 
-API_REQUEST_CODE=xxxxxxx
-
-# Create .env file
-Take the information from step 1 and place it into the .env file (based on the template file)
-
-# Install docker, docker-compose, or nodeJS v20
-Installation steps can be found from various sources on Google
-
-# Build and run using docker
-docker-compose up --build -d
-
-docker-compose up -d
-
-# Build and run using nodeJS
-npm install
-
-npm start
+Peace

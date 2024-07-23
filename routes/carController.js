@@ -17,21 +17,6 @@ router.get('/draw_car_map', async (req, res) => {
   }
 });
 
-router.get('/draw_car_map_by_navitime', async (req, res) => {
-  try {
-    var { start, goal, transits } = req.query;
-    var startList = start ? start.split(',') : []
-    var endList = goal ? goal.split(',') : []
-    var transitsList = transits ? transits.split(',') : [];
-
-    var shapeCar = await drawCarMap(start, goal, transitsList);
-    res.render('drawCarMapByNaviTime', { shapeCar: shapeCar, startCoordinates: startList, goalCoordinates: endList, coordinatesList: transitsList });
-  } catch (error) {
-    console.error('Error in /draw_car_map route:', error);
-    res.status(500).send('Internal Server Error');
-  }
-});
-
 router.get('/detail_car_map', async (req, res) => {
   try {
     var { start, goal, transits } = req.query;

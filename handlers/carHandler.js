@@ -1,20 +1,31 @@
 
-const { navitimeConfig } = require('../config/allConfig');
+const { rabidapiConfig } = require('../config/allConfig');
 const { ShapeCarConditions } = require('../data/allEnum')
-const { getRequest } = require('./common')
+const axios = require('axios');
 
 async function drawCarMap(start = "", goal = "", transits = []) {
 
-    var rawQuery = {
-        start_time: new Date().toISOString().substring(0, 16),
-        condition: ShapeCarConditions.recommend,
-        start: start,
-        goal: goal,
-        signature: navitimeConfig.signature,
-        request_code: navitimeConfig.requestCode,
-    }
+    const options = {
+        method: 'GET',
+        url: 'https://' + rabidapiConfig.car_domain + '/shape_car',
+        params: {
+            start_time: new Date().toISOString().substring(0, 16),
+            condition: ShapeCarConditions.recommend,
+            goal: goal,
+            start: start,
+            coord_unit: 'degree',
+            format: 'geojson',
+            datum: 'wgs84'
+        },
+        headers: {
+            'x-rapidapi-key': rabidapiConfig.car_key,
+            'x-rapidapi-host': rabidapiConfig.car_domain,
+        }
+    };
+
+
     if (transits?.length) {
-        rawQuery.via = JSON.stringify(
+        options.params.via = JSON.stringify(
             transits.reduce((acc, curr, index, array) => {
                 if (index % 2 === 0) {
                     acc.push({
@@ -26,13 +37,10 @@ async function drawCarMap(start = "", goal = "", transits = []) {
             }, [])
         );
     }
-    var queryString = new URLSearchParams(rawQuery).toString();
-
-    var url = `https://${navitimeConfig.domain}/${navitimeConfig.cid}/v1/shape_car?${queryString}`;
 
     try {
-        var spotList = await getRequest(url);
-        return spotList;
+        var spotList = await axios.request(options);
+        return spotList.data;
     } catch (error) {
         console.error(`Error fetching spots: ${error.message}`);
         throw error;
@@ -41,34 +49,42 @@ async function drawCarMap(start = "", goal = "", transits = []) {
 
 async function detailCarMap(start = "", goal = "", transits = []) {
 
-    var rawQuery = {
-        start_time: new Date().toISOString().substring(0, 16),
-        condition: ShapeCarConditions.recommend,
-        start: start,
-        goal: goal,
-        signature: navitimeConfig.signature,
-        request_code: navitimeConfig.requestCode,
-    }
+    const options = {
+        method: 'GET',
+        url: 'https://' + rabidapiConfig.car_domain + '/route_car',
+        params: {
+            start_time: new Date().toISOString().substring(0, 16),
+            condition: ShapeCarConditions.recommend,
+            goal: goal,
+            start: start,
+            coord_unit: 'degree',
+            format: 'geojson',
+            datum: 'wgs84'
+        },
+        headers: {
+            'x-rapidapi-key': rabidapiConfig.car_key,
+            'x-rapidapi-host': rabidapiConfig.car_domain,
+        }
+    };
+
+
     if (transits?.length) {
-        rawQuery.via = JSON.stringify(
+        options.params.via = JSON.stringify(
             transits.reduce((acc, curr, index, array) => {
                 if (index % 2 === 0) {
                     acc.push({
                         lat: curr,
-                        lon: array[index + 1] || ''
+                        lon: array[index + 1] || '' // Handle odd number of elements
                     });
                 }
                 return acc;
             }, [])
         );
     }
-    var queryString = new URLSearchParams(rawQuery).toString();
-
-    var url = `https://${navitimeConfig.domain}/${navitimeConfig.cid}/v1/route_car?${queryString}`;
 
     try {
-        var spotList = await getRequest(url);
-        return spotList;
+        var spotList = await axios.request(options);
+        return spotList.data;
     } catch (error) {
         console.error(`Error fetching spots: ${error.message}`);
         throw error;
@@ -76,24 +92,29 @@ async function detailCarMap(start = "", goal = "", transits = []) {
 }
 
 async function findSpotAndAddress(word = "") {
-    var rawQuery = {
-        word: word,
-        limit: 10,
-        signature: navitimeConfig.signature,
-        request_code: navitimeConfig.requestCode,
-    }
-    var queryString = new URLSearchParams(rawQuery).toString();
 
-    var urlSpot = `https://${navitimeConfig.domain}/${navitimeConfig.cid}/v1/spot?${queryString}`;
-    var urlAddress = `https://${navitimeConfig.domain}/${navitimeConfig.cid}/v1/address?${queryString}`;
+    const options = {
+        method: 'GET',
+        url: 'https://'+ rabidapiConfig.geo_domain +'/address',
+        params: {
+            coord_unit: 'degree',
+            datum: 'wgs84',
+            limit: '10',
+            word: word,
+            sort: 'code_asc',
+            offset: '0'
+        },
+        headers: {
+            'x-rapidapi-key': rabidapiConfig.geo_key,
+            'x-rapidapi-host': rabidapiConfig.geo_domain
+        }
+    };
 
     try {
-        var spotList = await getRequest(urlSpot);
-        var addressList = await getRequest(urlAddress);
-        return [...spotList.items, ...addressList.items];
+        var spotList = await axios.request(options);
+        return spotList.data.items
     } catch (error) {
-        console.error(`Error fetching spots: ${error.message}`);
-        throw error;
+        console.error(error);
     }
 }
 
