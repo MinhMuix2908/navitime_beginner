@@ -1,10 +1,16 @@
 # Why navitime
 So i started a project for drawing a car route from A to B in Japan (with transits C, D, etc)
+
 Also need to find options for bus, metro from A to B
+
 I found out that they got something call navitime
+
 At first everything is so blur and hard to understand for me
+
 So that why after i getting a little more familiar with this navitime, i decided to create this project
+
 If you like my work, please give me a start and a folk
+
 So appriciate 
 
 # Generate API token for NAVITime
