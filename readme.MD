@@ -35,3 +35,12 @@ docker-compose up -d
 npm install
 
 npm start
+
+# A little demo of my work
+Image of map using NaviTime paid version
+![alt navitime_image](blob/navitime_image.png)
+
+Image of map using RapidAPI and leaflet
+![alt leaflet_rabidapi](blob/leaflet_rabidapi.png)
+
+# Peace
